@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"github.com/xavividal/ddd-go-example/internal/app/player"
 	"github.com/xavividal/ddd-go-example/internal/infra/container"
+	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
@@ -13,5 +13,5 @@ func main() {
 	rq := player.CreatePlayerRQ{Name: "Han Solo"}
 	rs := c.App.Player.CreatePlayer.Execute(rq)
 
-	fmt.Println(rs)
+	spew.Dump(rs)
 }
