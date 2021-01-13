@@ -3,22 +3,15 @@ package main
 import (
 	"fmt"
 	"github.com/xavividal/ddd-go-example/internal/app/player"
-	assemblerDomainPlayer "github.com/xavividal/ddd-go-example/internal/infra/assembler/domain/player"
-	assemblerAppPlayer "github.com/xavividal/ddd-go-example/internal/infra/assembler/app/player"
-	persistencePlayer "github.com/xavividal/ddd-go-example/internal/infra/persistence/player"
+	"github.com/xavividal/ddd-go-example/internal/infra/container"
 )
 
 func main() {
-	rq := player.CreatePlayerRQ{
-		Name: "Han Solo",
-	}
+	container.New()
+	c := container.Instance()
 
-	pa := assemblerDomainPlayer.New()
-
-	rs := player.NewCreatePlayer(
-		persistencePlayer.NewMemoryRepository(),
-		assemblerAppPlayer.NewCreatePlayerAssembler(pa),
-		).Execute(rq)
+	rq := player.CreatePlayerRQ{Name: "Han Solo"}
+	rs := c.App.Player.CreatePlayer.Execute(rq)
 
 	fmt.Println(rs)
 }
