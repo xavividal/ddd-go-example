@@ -6,11 +6,9 @@ import (
 	assemblerAppPlayer "github.com/xavividal/ddd-go-example/internal/infra/assembler/app/player"
 	assemblerDomainPlayer "github.com/xavividal/ddd-go-example/internal/infra/assembler/domain/player"
 	persistencePlayer "github.com/xavividal/ddd-go-example/internal/infra/persistence/player"
-	"sync"
 )
 
 var instance *Container
-var mutex sync.RWMutex
 
 // Container ...
 type Container struct {
@@ -36,15 +34,7 @@ type Container struct {
 	}
 }
 
-// New Creates a new container
-func New() {
-	mutex.Lock()
-	defer mutex.Unlock()
-
-	if instance != nil {
-		return
-	}
-
+func init() {
 	instance = &Container{}
 	instance.Infra.Assembler.Domain.Player.Assembler = assemblerDomainPlayer.New()
 
@@ -60,9 +50,7 @@ func New() {
 	)
 }
 
+// Instance returns the one and only container
 func Instance() *Container {
-	if instance == nil {
-		panic("Container not initialized")
-	}
 	return instance
 }

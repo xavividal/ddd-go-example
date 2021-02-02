@@ -1,13 +1,12 @@
 package main
 
 import (
+	"github.com/davecgh/go-spew/spew"
 	"github.com/xavividal/ddd-go-example/internal/app/player"
 	"github.com/xavividal/ddd-go-example/internal/infra/container"
-	"github.com/davecgh/go-spew/spew"
 )
 
 func main() {
-	container.New()
 	c := container.Instance()
 
 	rq := player.CreatePlayerRQ{Name: "Han Solo"}
